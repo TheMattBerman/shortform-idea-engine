@@ -17,16 +17,16 @@ Do not use for:
 
 ## Dependencies
 
-All five sub-skills and the Gemini helper script must be present in the same skills environment.
+This is a self-contained plugin. It bundles all sub-skills and the Gemini helper script. No shared skills environment is required. The hard external requirements are three API keys (see next section).
 
 | Dependency | Role in this skill |
 |---|---|
-| `virlo` skill | Stage 1 keyword mode: discovers outlier short-form videos by niche keyword across Instagram, TikTok, and YouTube |
-| `scrape` skill | Stage 1 handles mode and Stage 2: pulls recent posts per handle, transcripts, and cover frames via ScrapeCreators API |
+| `virlo` skill (bundled) | Stage 1 keyword mode: discovers outlier short-form videos by niche keyword across Instagram, TikTok, and YouTube |
+| `scrape` skill (bundled) | Stage 1 handles mode, Stage 2, and Stage 4 CDN URL resolution: pulls recent posts, transcripts, cover frames, and direct media URLs via ScrapeCreators API |
 | `video-decoder` skill | Stage 3 and Stage 4: decodes each outlier into a filled Decode Record (written hook, spoken hook, root, VV, IT, Format) |
 | `script-writer` skill | Stage 7: writes one production-ready script per approved idea |
-| `brand-voice` skill | Optional at Stage 0: builds the `voice_tone` field of a new brand profile |
-| `scripts/gemini-video-analyze.js` | Stage 4 deep pass: runs visual analysis (pacing, cut rhythm, visual style, retention devices, text-on-screen cadence) via OpenRouter Gemini |
+| `brand-profiler` skill (bundled) | Stage 0: builds a new brand profile when none exists, collecting all schema fields including `voice_tone` |
+| `scripts/gemini-video-analyze.js` (bundled) | Stage 4 deep pass: runs visual analysis (pacing, cut rhythm, visual style, retention devices, text-on-screen cadence) via OpenRouter Gemini |
 
 ## API keys and graceful degradation
 
@@ -53,10 +53,11 @@ Degradation rules:
 Ask the user for:
 
 1. **Mode**: keyword mode (discover videos by niche keyword) or handles mode (analyze specific competitor handles).
-2. **Brand profile path**: the path to a filled brand profile following `references/brand-profile-template.md`. If none exists, offer to build one: chain to the `brand-voice` skill for the `voice_tone` field, then collect the remaining fields (`audience`, `positioning`, `content_pillars`, `anti_topics`, `proof_credibility`, `format_preferences`) interactively.
+2. **Brand profile path**: the path to a filled brand profile following `references/brand-profile-template.md`. If none exists, offer to build one by chaining to the bundled `brand-profiler` skill, which collects all schema fields (`voice_tone`, `audience`, `positioning`, `content_pillars`, `anti_topics`, `forbidden_constructions`, `proof_credibility`, `format_preferences`) interactively or from an existing brand document.
 3. **Run slug**: a short lowercase label for this session (e.g. `ai-tools-keyword` or `techcreator-handles`). Used to name the run folder.
+4. **Run base path**: where the run folder should be written. The default base is `./shortform-runs/` relative to the current working directory, producing `./shortform-runs/YYYY-MM-DD-<slug>/`. If the session is running inside a structured project that has its own research or output area, ask the user whether to place the run there instead. Confirm the resolved base path with the user before writing any file.
 
-Check all three API keys. Report which modes are available before spending any credits. Create the run folder `runs/YYYY-MM-DD-<slug>/` and write `00-intake.md` with mode, query or handle list, brand profile filename used, keys available, and any overrides.
+Check all three API keys. Report which modes are available before spending any credits. Create the run folder at the confirmed base path (e.g. `<base>/YYYY-MM-DD-<slug>/`) and write `00-intake.md` with mode, query or handle list, brand profile filename used, run base path, keys available, and any overrides.
 
 ### Stage 1: Discovery
 
@@ -66,14 +67,18 @@ Check all three API keys. Report which modes are available before spending any c
 - Indirect ring: audience-adjacent keyword phrases (same audience, different topic angle).
 - Adjacent ring: format-adjacent keyword phrases (same format or production style, different topic).
 
-For each ring, follow the virlo skill's documented two-step orbit procedure:
+Submit ring queries SEQUENTIALLY, not in parallel. Virlo caps concurrent orbit submissions at 2. Submit one ring, poll until `status: "completed"`, retrieve results, then submit the next ring.
+
+For each ring, follow the virlo skill's documented orbit procedure:
 
 1. Submit the orbit job: `/virlo orbit "<keyword_phrase>" --platforms instagram,tiktok,youtube --raw`. This queues the job and returns an `orbit_id`.
 2. Poll status with `/virlo orbit-status [orbit_id]` until `status: "completed"`.
 3. Retrieve outlier creators: `/virlo orbit-outliers [orbit_id] --limit 25`.
 4. Retrieve videos: call `GET /v1/orbit/[orbit_id]/videos` directly for the video list.
 
-Save raw JSON responses to `raw/` for each orbit.
+After retrieving orbit videos, compute per-video outlier magnitude. Orbit results are raw videos with no baseline attached. For each unique creator appearing in the orbit results, fetch that creator's recent posts via the `scrape` skill (`/scrape posts [handle] [platform] --limit 20 --raw`) to establish their baseline median view count. Then compute each video's outlier ratio as `video_views / creator_median_views`. This step is required: Stage 4 and the Stage 6 ranking rubric depend on per-video outlier magnitude. Without it, outlier data is absent for all keyword-mode videos.
+
+Save raw JSON responses to `raw/` for each orbit and for each baseline fetch.
 
 **Handles mode.** Invoke the `scrape` skill for recent posts per handle: `/scrape posts [handle] [platform] --limit 20 --raw`. For each handle, compute the median view count across the returned posts. Keep only posts that beat that creator's own median by 2x or more (outlier threshold). Save raw JSON to `raw/`.
 
@@ -92,20 +97,22 @@ Save all raw responses to `raw/` named by source and timestamp (e.g. `scrapecrea
 
 ### Stage 3: Decode
 
-Run the `video-decoder` skill on every outlier. Pass in: the transcript text, the cover frame URL, the creator handle, the platform, the outlier magnitude (ratio computed in Stage 1), and the competitor ring assignment (classify each video's ring relative to the brand using the ring definitions in `video-decoder/references/decode-framework.md`).
+Run the `video-decoder` skill on every outlier. Pass in: the transcript text (if available), the cover frame URL (if available), the creator handle, the platform, the outlier magnitude (ratio computed in Stage 1), and the competitor ring assignment (classify each video's ring relative to the brand using the ring definitions in `video-decoder/references/decode-framework.md`).
 
 The `video-decoder` skill returns one filled Decode Record per video. Write each record to `01-decodes/[video_id].md`. At this point all decodes have `decode_depth: shallow`.
 
-If the `video-decoder` skill cannot complete a decode for a video (missing transcript, failed cover frame, sub-skill error, or any other reason), skip that video, do not write a record to `01-decodes/`, and record it as `decode-failed` in `00-intake.md` with the video URL and the reason. Continue processing the remaining videos.
+A missing transcript alone is NOT a reason to skip a video. Many of the highest-outlier videos are text-overlay or POV-style videos with no spoken content. If the video has a cover frame or a caption, decode it shallow with `spoken_hook: n/a`. Skip a video only when there is genuinely nothing to decode: no transcript, no cover frame, no caption, AND no other meaningful signal (e.g. a hard fetch failure with nothing retrievable). Record any skipped video as `decode-failed` in `00-intake.md` with the video URL and the exact reason. Continue processing the remaining videos.
 
 ### Stage 4: Deep pass
 
 Select the top 5 to 8 outliers ranked by outlier magnitude (highest ratio first).
 
+Before calling the Gemini helper for any video, resolve the direct CDN media URL for that video using the `scrape` skill. A social page URL (e.g. a TikTok or Instagram page URL) is rejected by Gemini. Pass the CDN media URL to the helper, never the social page URL. Resolve and use CDN URLs promptly within the run, since CDN URLs expire.
+
 For each selected video, call the Gemini helper and redirect stdout directly to the raw file in one command:
 
 ```bash
-OPENROUTER_API_KEY=<key> node scripts/gemini-video-analyze.js <videoUrl> "Analyze this short-form video for: pacing (average cut frequency, notable slow or fast segments), cut rhythm (pattern of cuts: cut-on-beat, reaction cuts, b-roll intercuts), visual style (color grading, background, camera movement, on-screen graphic density), text-on-screen cadence (how often captions or callouts appear relative to spoken content), and retention devices (specific hooks, pattern interrupts, cliffhangers, or loops used mid-video). Return structured notes for each dimension." > raw/gemini-<video_id>-<timestamp>.json
+OPENROUTER_API_KEY=<key> node scripts/gemini-video-analyze.js <cdnMediaUrl> "Analyze this short-form video for: pacing (average cut frequency, notable slow or fast segments), cut rhythm (pattern of cuts: cut-on-beat, reaction cuts, b-roll intercuts), visual style (color grading, background, camera movement, on-screen graphic density), text-on-screen cadence (how often captions or callouts appear relative to spoken content), and retention devices (specific hooks, pattern interrupts, cliffhangers, or loops used mid-video). Return structured notes for each dimension." > raw/gemini-<video_id>-<timestamp>.json
 ```
 
 The redirect saves the raw Gemini response to `raw/gemini-<video_id>-<timestamp>.json` so Stage 8 traceability can be satisfied.
@@ -136,7 +143,7 @@ Score every idea using `references/ranking-rubric.md`:
 3. Compute `combined = viral_potential * (brand_fit / 10)`. Round to one decimal place.
 4. Sort descending by `combined`. When two ideas tie, the one with the higher `viral_potential` ranks first.
 5. Write the ranked table to `02-ideas.md` in this column order: `# | idea | root | borrowed VV/IT/Format | viral | brand fit | combined | one-line rationale`.
-6. If `OPENROUTER_API_KEY` was missing, append "shallow-decoded" to the `one-line rationale` for any idea whose source video(s) did not receive a deep pass.
+6. Append "shallow-decoded" to the `one-line rationale` for any idea whose source video(s) did not receive a deep pass, for ANY reason: `OPENROUTER_API_KEY` was missing, OR the source video ranked below the top 5-8 cutoff and was not selected for Stage 4, OR the deep pass attempt failed for that video.
 
 ---
 
