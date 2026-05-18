@@ -18,13 +18,15 @@ Pull content from social platforms via ScrapeCreators API.
 | Type | Target | Example |
 |------|--------|---------|
 | `transcript` | YouTube URL | `/scrape transcript https://youtube.com/watch?v=abc123` |
+| `transcript` | TikTok URL | `/scrape transcript https://www.tiktok.com/@user/video/1234567890` |
+| `transcript` | Instagram URL | `/scrape transcript https://www.instagram.com/reel/ABC123/` |
 | `posts` | handle + platform | `/scrape posts @garyvee tiktok` |
 | `ads` | brand name or URL | `/scrape ads lululemon` |
 | `profile` | handle + platform | `/scrape profile @alexhormozi instagram` |
 
 ### Supported Platforms
 - **transcript**: TikTok, Instagram, YouTube
-- **posts/profile**: TikTok, Instagram, Twitter/X
+- **posts/profile**: TikTok, Instagram, Twitter/X (profile + tweets; no followers/following list)
 - **ads**: Meta Ad Library (Facebook/Instagram ads)
 
 ## Arguments
@@ -60,11 +62,11 @@ Verify `SCRAPECREATORS_API_KEY` is set before proceeding.
 All requests use curl with the `x-api-key` header:
 
 ```bash
-curl -s "https://api.scrapecreators.com/v1/[endpoint]" \
+curl -s "https://api.scrapecreators.com/[version]/[endpoint]" \
   -H "x-api-key: $SCRAPECREATORS_API_KEY"
 ```
 
-See **references/scrapecreators-endpoints.md** for full endpoint documentation.
+The version prefix (`v1`, `v2`, `v3`) varies by endpoint. Always use the exact path from **references/scrapecreators-endpoints.md** rather than assuming `v1`.
 
 ### 3. Parse Response
 

@@ -64,6 +64,25 @@ curl -s "https://api.scrapecreators.com/v1/youtube/video/transcript?url=https://
 
 ---
 
+### Video Comments
+Get public comments from a YouTube video.
+
+| | |
+|---|---|
+| **Endpoint** | `GET /v1/youtube/video/comments` |
+| **Credits** | 1 |
+
+**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `url` | Yes | Full YouTube video URL |
+
+**Notes:**
+- Returns top-level comments. Use `/v1/youtube/video/comment/replies` to fetch replies to a specific comment.
+- See `reading-scrape.md` for guidance on how to interpret comment signal.
+
+---
+
 ## TikTok Endpoints
 
 ### Profile
@@ -143,6 +162,25 @@ Get transcript from a TikTok video.
 | Param | Required | Description |
 |-------|----------|-------------|
 | `url` | Yes | TikTok video URL |
+
+---
+
+### Video Comments
+Get public comments from a TikTok video.
+
+| | |
+|---|---|
+| **Endpoint** | `GET /v1/tiktok/video/comments` |
+| **Credits** | 1 |
+
+**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `url` | Yes | TikTok video URL |
+
+**Notes:**
+- Returns top-level comments. Use `/v1/tiktok/video/comment/replies` to fetch replies to a specific comment.
+- See `reading-scrape.md` for guidance on how to interpret comment signal.
 
 ---
 
@@ -249,7 +287,25 @@ curl -s "https://api.scrapecreators.com/v1/twitter/profile?handle=elonmusk" \
 
 **Response includes:** username, display name, bio, follower/following counts, verified status, profile image, banner image.
 
-**Limitation:** Twitter only shows ~100 most recent tweets publicly.
+---
+
+### User Tweets
+Get recent tweets from a Twitter/X user.
+
+| | |
+|---|---|
+| **Endpoint** | `GET /v1/twitter/user-tweets` |
+| **Credits** | 1 |
+
+**Parameters:**
+| Param | Required | Description |
+|-------|----------|-------------|
+| `handle` | Yes | Twitter username (without @) |
+| `cursor` | No | Pagination cursor |
+
+**Notes:**
+- Twitter's public API limits visibility to approximately the 100 most recent tweets.
+- Use `/v1/twitter/tweet` to fetch details for a single tweet by URL or ID.
 
 ---
 

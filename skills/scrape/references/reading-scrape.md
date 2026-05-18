@@ -13,7 +13,7 @@ Most reliable. YouTube captions exist on the majority of videos with speech, eit
 Moderately reliable. ScrapeCreators generates TikTok transcripts via speech-to-text on the fly, so the result depends on audio quality, accent, and video length. Short clips under 15 seconds often return empty or a single fragmented sentence. Background music layered over speech produces noisy, partial output. Expect gaps in slang-heavy or fast-paced delivery. A transcript with gaps is still useful for hook identification: the first 2-3 lines are usually the cleanest because creators pause there for the hook.
 
 ### Instagram
-Least reliable of the three. The `v2/instagram/media/transcript` endpoint runs AI transcription, which takes 10-30 seconds per request. Reels under 10 seconds frequently return empty. Caption-style videos where text is overlaid but there is no voiceover will always return empty. When a transcript is present it is usually accurate enough to pull hooks, but treat timing data as approximate. Empty transcript on Instagram does not mean the content is low-value: a lot of high-performing Reels are visual or music-driven with no speech.
+Least reliable of the three. The `/v2/instagram/media/transcript` endpoint runs AI transcription, which takes 10-30 seconds per request. Reels under 10 seconds frequently return empty. Caption-style videos where text is overlaid but there is no voiceover will always return empty. When a transcript is present it is usually accurate enough to pull hooks, but treat timing data as approximate. Empty transcript on Instagram does not mean the content is low-value: a lot of high-performing Reels are visual or music-driven with no speech.
 
 ### What an Empty Transcript Means (Across Platforms)
 Do not discard the video. Empty transcript tells you: the hook is visual or sound-design-driven, the creator is relying on pattern interrupts, captions, or text overlays rather than speech. Use the video URL to pass directly to Gemini for visual analysis instead.
@@ -57,7 +57,7 @@ The profile posts and reels responses include media URLs. For video posts, the v
 
 ## Public Comments: Directional vs. Reliable
 
-ScrapeCreators can pull public comments from TikTok and YouTube videos. The signal quality depends on what you are trying to learn.
+ScrapeCreators exposes public comments for TikTok (`GET /v1/tiktok/video/comments`) and YouTube (`GET /v1/youtube/video/comments`). Both are documented in `scrapecreators-endpoints.md`. The signal quality depends on what you are trying to learn.
 
 **Use comments as directional signal for:**
 - Identifying the specific claim or moment that resonated (people quote the line they react to)
@@ -71,4 +71,4 @@ ScrapeCreators can pull public comments from TikTok and YouTube videos. The sign
 
 A video with few comments but very high saves (TikTok bookmark data from the video info endpoint) is often more valuable as a swipe-file reference than a high-comment video: saves mean people intend to use the content, comments mean it provoked a reaction. Both are useful, but saves signal practical utility.
 
-For ad creative research via the Meta Ad Library endpoints, comments are not available. Active status and run duration are the directional proxies for performance. An ad that has been running for 30 or more days without pause is almost certainly profitable.
+For ad creative research via the Meta Ad Library endpoints, comments are not available. The primary proxy for performance is the `is_active` field in the response: an ad still marked active is being funded right now, which is the strongest single signal the data can give you. The response schema does not expose a `start_date`, so you cannot compute exact run duration from a single API call. To estimate how long an ad has been running, you need repeated scrapes over time and comparison of which ad IDs persist across runs. The directional principle still holds: an ad that appears active across multiple scrapes spaced days or weeks apart is almost certainly profitable. A single active snapshot is a weak signal; persistence across scrapes is a strong one.
