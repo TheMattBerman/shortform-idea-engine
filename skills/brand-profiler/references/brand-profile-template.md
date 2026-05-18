@@ -1,5 +1,7 @@
 # Brand Profile Template
 
+> **Canonical source:** This file (`skills/brand-profiler/references/brand-profile-template.md`) owns the schema. The orchestrator's copy at `skills/shortform-idea-engine/references/brand-profile-template.md` must stay in sync with it. Any schema change must be applied to both files at the same time.
+
 Reference for the `brand-profiler` skill and the `shortform-idea-engine` orchestrator. Use this document to build or validate a brand profile before scoring ideas.
 
 ---

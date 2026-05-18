@@ -25,9 +25,9 @@ The user has no existing brand document. Ask for each schema field in order, one
 
 Field sequence:
 
-1. `voice_tone` - Ask: how does the brand sound? Tone, sentence style, things it never says.
+1. `voice_tone` - Ask: how does the brand sound? Collect at minimum: a tone descriptor (e.g. "direct and practical"), a sentence-style note (e.g. "short declarative sentences"), and one or two "never says" examples (e.g. "never uses hype words like game-changer"). A single word like "casual" is not enough depth to be useful to downstream skills.
 2. `audience` - Ask: who is the content for? Demographics, platform, level of expertise.
-3. `positioning` - Ask: one sentence describing what the brand is and who it serves.
+3. `positioning` - Ask: one sentence describing what the brand does and the value it delivers to its audience.
 4. `content_pillars` - Ask: what topics are always on-brand? Collect as a list.
 5. `anti_topics` - Ask: what topics are off-limits, no exceptions? Collect as a list.
 6. `forbidden_constructions` - Ask explicitly: are there any hard voice rules? Specific phrases, punctuation, or framing patterns the brand never uses? Common examples: no em dashes, no "not X it's Y" contrarian framing, no hype adjectives. This field is checked by the `script-writer` lint pass, so the more specific the better.
@@ -44,6 +44,7 @@ The user supplies a brand voice guide, style sheet, or other brand document. Rea
 - For `forbidden_constructions`: scan the document for any stated prohibitions, "never say" lists, or style rules. If the document is silent on this field, ask the user directly before proceeding. Do not leave it blank.
 - For `anti_topics`: look for content restrictions, off-limits subjects, or audience exclusions stated in the document.
 - Where the document is ambiguous or silent on a field, ask a single clarifying question for that field rather than guessing.
+- For `format_preferences` specifically: this field must resolve to one or more of the four allowed values (talking-head, b-roll-heavy, text-heavy, mixed). When asking the user about it, offer those four options explicitly rather than using an open question, to avoid collecting free text that must be mapped later.
 
 After filling the schema, show the completed profile to the user and note any fields that were inferred (not explicitly stated) so the user can confirm or correct them.
 
