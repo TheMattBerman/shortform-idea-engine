@@ -8,8 +8,10 @@ Reference for the `shortform-idea-engine` skill. Use this document to create and
 
 Each run lives in its own timestamped folder. Create the folder before writing any artifacts.
 
+**Base path:** runs are written to `<base>/shortform-runs/<YYYY-MM-DD>-<slug>/` where `<base>` is the current working directory by default, or a project research area when invoked inside a structured project. The run folder is never written inside the plugin install directory. Confirm the resolved base path with the user before writing any file.
+
 ```
-runs/YYYY-MM-DD-<slug>/
+<base>/shortform-runs/YYYY-MM-DD-<slug>/
   00-intake.md     mode (keyword|handles), brand profile used, API keys available
   01-decodes/      one decode record per video (the VV/IT/Format pool)
   02-ideas.md      the ranked idea table (the gate artifact)
@@ -17,7 +19,7 @@ runs/YYYY-MM-DD-<slug>/
   raw/             raw Virlo / ScrapeCreators / Gemini JSON, receipts for every claim
 ```
 
-**Folder naming:** `YYYY-MM-DD` is the run date. `<slug>` is a short lowercase label for the session, e.g. `ai-tools-keyword` or `techcreator-handles`. Handles in slugs drop the `@`. Example: `runs/2026-05-18-ai-tools-keyword/`.
+**Folder naming:** `YYYY-MM-DD` is the run date. `<slug>` is a short lowercase label for the session, e.g. `ai-tools-keyword` or `techcreator-handles`. Handles in slugs drop the `@`. Example: `shortform-runs/2026-05-18-ai-tools-keyword/`.
 
 ---
 

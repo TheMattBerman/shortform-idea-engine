@@ -83,3 +83,16 @@ Present the ranked idea table at the approval gate. Sort by `combined` descendin
 - `one-line rationale`: one sentence explaining why this idea wins or is risky
 
 Disqualified ideas are not shown in the ranked table. They are always appended below the ranked table in `02-ideas.md` in a clearly labelled "Disqualified (anti-topic)" section. Each entry lists the idea and the specific anti-topic it touched.
+
+---
+
+## Shallow-decoded flag
+
+An idea is flagged "shallow-decoded" in its `one-line rationale` column whenever its source video(s) did not receive a deep pass for any reason. The two causes are:
+
+1. **No OpenRouter key.** `OPENROUTER_API_KEY` was not set, so Stage 4 was skipped entirely and all decodes remain shallow.
+2. **Below Stage 4 cutoff (normal operation).** The source video ranked below the top 5-8 outlier cutoff for the deep pass and was therefore decoded shallow in the normal course of the run. This is the majority case in most runs.
+
+A failed deep-pass attempt (key present but the call errored) is treated the same as cause 2: the idea is flagged "shallow-decoded."
+
+The flag does not disqualify the idea. It signals to the user that the rationale rests on partial signal and the idea may benefit from a manual review of the source video before committing to production.
