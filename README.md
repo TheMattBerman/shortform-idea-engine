@@ -8,16 +8,18 @@ You point it at a niche keyword or a list of competitor handles. It discovers wh
 
 ## What it does
 
-The orchestrator runs an eight-stage pipeline:
+The orchestrator runs a ten-step pipeline (Stage 0 through Stage 8, plus an explicit user approval gate between ranking and scripting):
 
-1. **Intake:** confirms mode (keyword or handles), loads your brand profile, checks API keys, and reports which modes are available before spending any credits.
-2. **Discovery:** finds outlier videos either by niche keyword across direct, indirect, and adjacent competitor rings (Virlo) or by analyzing specific competitor handles (ScrapeCreators).
-3. **Receipts:** collects transcripts and cover frames for every outlier.
-4. **Decode:** runs each outlier through the video-decoder skill to extract its Viral Vector, Interest Topic, and Format.
-5. **Deep pass:** for the top 5 to 8 outliers by magnitude, runs a Gemini visual analysis of pacing, cut rhythm, and retention devices (requires OpenRouter key).
-6. **Ideate:** generates 10 to 15 remixed ideas anchored to your brand profile's pillars, audience, and credibility.
-7. **Rank and gate:** scores every idea on viral potential and brand fit, removes any that hit your anti-topics list, presents the ranked table, and waits for your approval before scripting.
-8. **Script:** writes one production-ready script per approved idea (hook pair, beat-by-beat body with retention marks, CTA, shotlist).
+1. **Stage 0 - Intake:** confirms mode (keyword or handles), loads your brand profile, checks API keys, and reports which modes are available before spending any credits.
+2. **Stage 1 - Discovery:** finds outlier videos either by niche keyword across direct, indirect, and adjacent competitor rings (Virlo) or by analyzing specific competitor handles (ScrapeCreators).
+3. **Stage 2 - Receipts:** collects transcripts and cover frames for every outlier.
+4. **Stage 3 - Decode:** runs each outlier through the video-decoder skill to extract its Viral Vector, Interest Topic, and Format.
+5. **Stage 4 - Deep pass:** for the top 5 to 8 outliers by magnitude, runs a Gemini visual analysis of pacing, cut rhythm, and retention devices (requires OpenRouter key).
+6. **Stage 5 - Ideate:** generates 10 to 15 remixed ideas anchored to your brand profile's pillars, audience, and credibility.
+7. **Stage 6 - Rank:** scores every idea on viral potential and brand fit, removes any that hit your anti-topics list, and writes the ranked table.
+8. **GATE:** presents the ranked table and waits for your explicit approval. Nothing is scripted until you select which ideas to proceed with.
+9. **Stage 7 - Script:** writes one production-ready script per approved idea (hook pair, beat-by-beat body with retention marks, CTA, shotlist).
+10. **Stage 8 - Log:** verifies run-folder completeness, confirms every factual claim traces to a raw API response file, and outputs a run summary (outliers found, decodes shallow vs. deep, ideas generated, scripts produced).
 
 ---
 
