@@ -20,6 +20,8 @@ Provide:
 
 ## Procedure
 
+> **HARD RULE: draft-and-hold.** Complete every step below (Hook, Body, Retention marks, CTA, Lint pass, Shotlist) internally before producing any visible output or writing any file. Do NOT stream sections as they are drafted. The complete, lint-cleared script is produced as a single output only after the lint pass has run and all violations are fixed. Partial output before the lint pass clears is not permitted.
+
 ### 1. Load idea
 
 Restate the borrowed VV, IT, and Format. Confirm the brand angle. If anything is ambiguous, ask one clarifying question before proceeding.
@@ -47,16 +49,16 @@ Write a close consistent with the brand's positioning and any format preferences
 
 ### 6. Brand-voice lint pass
 
-Before writing the final script file, check every line of the drafted script against:
+This step runs on the fully drafted, internally-held script before any output is produced. Do not output or write the script until the lint pass clears. Check every line of the drafted script, including the written and spoken hook lines drafted in step 2, against:
 
 (a) The brand profile's `forbidden_constructions` field: flag and fix any line that violates a listed rule.
 (b) Universal house rules: no em dashes (use commas, colons, or parentheses instead) and no `--` double-hyphen constructions.
 
-Fix all violations before proceeding. Do not output a script that contains any flagged construction. Example violations caught in test runs: an em dash used as a clause separator, and a "not X, it's Y" contrarian framing in a hook.
+Fix all violations before proceeding. The final script is produced as a single output only after all violations are resolved. Do not output a script that contains any flagged construction. Example violations caught in test runs: an em dash used as a clause separator, and a "not X, it's Y" contrarian framing in a hook.
 
 ### 7. Shotlist
 
-For each beat plus the CTA, state what is on screen. If the brand profile's `on_camera_talent` field is set to `none` or indicates a faceless brand, do not spec a talking-head shot anywhere in the shotlist. Use b-roll, text cards, screen recordings, or voiceover-over-visuals instead. If `on_camera_talent` names a specific presenter or the founder, the shotlist may use them by name. Keep the shotlist directive, not cinematic.
+For each beat plus the CTA, state what is on screen. The canonical no-talent value is `none`. If the brand profile's `on_camera_talent` field is `none` or otherwise clearly indicates no on-camera presenter, do not spec a talking-head shot anywhere in the shotlist. Use b-roll, text cards, screen recordings, or voiceover-over-visuals instead. Treat the field as "has talent" only when it names a specific person or role. If `on_camera_talent` names a specific presenter or the founder, the shotlist may use them by name. Keep the shotlist directive, not cinematic.
 
 ## Output
 

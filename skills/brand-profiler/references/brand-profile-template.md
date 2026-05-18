@@ -21,8 +21,8 @@ anti_topics:              topics that are OFF-brand, hard exclude (list)
 forbidden_constructions:  hard voice rules, e.g. no em dashes, no "not X it's Y" (list)
 proof_credibility:        what the brand can authentically claim
 format_preferences:       one or more of: talking-head, b-roll-heavy, text-heavy, mixed
-on_camera_talent:         who, if anyone, is available to appear on camera (a named presenter,
-                          the founder, or none / faceless brand)
+on_camera_talent:         who, if anyone, is available to appear on camera: a named presenter,
+                          the founder, or `none` for a faceless brand (canonical no-talent value)
 ```
 
 **Note on `proof_credibility`:** If the brand is new and has no track record, set this field to `none yet`. In that case, score the "authentic credibility" brand-fit sub-factor as 5 (neutral) until real proof exists.
@@ -74,3 +74,5 @@ proof_credibility:        Tests every tool hands-on before reviewing. 50k newsle
 format_preferences:       talking-head, b-roll-heavy
 on_camera_talent:         the founder (Jordan, appears on camera for all talking-head segments)
 ```
+
+**Note on `on_camera_talent`:** Use a named presenter or role when one exists. For a faceless brand, this field reads `none (faceless brand, no on-camera presenter)`. The `script-writer` skill treats any value of `none` as "no talent" and removes all talking-head shots from the shotlist.
