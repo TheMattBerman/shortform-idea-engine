@@ -42,6 +42,8 @@ Signs of repeatable signal (act on it):
 
 When in doubt: pull the creator's last 20 posts via the `scrape` skill and check the baseline. One spike without a second point of confirmation is not a pattern.
 
+Note: when virlo is run inside the `shortform-idea-engine` orchestrator, the orchestrator already performs this baseline fetch systematically in Stage 1 for every creator in the ring results. The manual spike-check described here is only needed when virlo is used standalone, outside the orchestrator pipeline.
+
 ---
 
 ## Ring-by-Ring Reading

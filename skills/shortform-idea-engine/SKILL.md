@@ -35,7 +35,7 @@ Required keys: `VIRLO_API_KEY`, `SCRAPECREATORS_API_KEY`, `OPENROUTER_API_KEY`.
 Load them at Stage 0 before any spend:
 
 ```bash
-source MatthewBerman/04-claude-code/config/.env
+source .env
 ```
 
 Degradation rules:
@@ -53,7 +53,7 @@ Degradation rules:
 Ask the user for:
 
 1. **Mode**: keyword mode (discover videos by niche keyword) or handles mode (analyze specific competitor handles).
-2. **Brand profile path**: the path to a filled brand profile following `references/brand-profile-template.md`. If none exists, offer to build one by chaining to the bundled `brand-profiler` skill, which collects all schema fields (`voice_tone`, `audience`, `positioning`, `content_pillars`, `anti_topics`, `forbidden_constructions`, `proof_credibility`, `format_preferences`) interactively or from an existing brand document.
+2. **Brand profile path**: the path to a filled brand profile following `references/brand-profile-template.md`. If none exists, offer to build one by chaining to the bundled `brand-profiler` skill, which collects all schema fields (`voice_tone`, `audience`, `positioning`, `content_pillars`, `anti_topics`, `forbidden_constructions`, `proof_credibility`, `format_preferences`, `on_camera_talent`) interactively or from an existing brand document.
 3. **Run slug**: a short lowercase label for this session (e.g. `ai-tools-keyword` or `techcreator-handles`). Used to name the run folder.
 4. **Run base path**: where the run folder should be written. The default base is `./shortform-runs/` relative to the current working directory, producing `./shortform-runs/YYYY-MM-DD-<slug>/`. If the session is running inside a structured project that has its own research or output area, ask the user whether to place the run there instead. Confirm the resolved base path with the user before writing any file.
 

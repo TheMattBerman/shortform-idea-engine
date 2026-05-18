@@ -16,7 +16,7 @@ Use this skill when you have a single approved idea (with its borrowed VV, IT, a
 Provide:
 
 - **One approved idea:** its borrowed Viral Vector, Interest Topic, and Format, plus the brand angle (how the format and vector were remixed to fit this brand).
-- **Brand profile:** following the schema in `shortform-idea-engine/references/brand-profile-template.md`. If no brand profile is supplied, ask the user to provide one or offer to build one via the `brand-voice` skill before continuing. When used standalone (outside the full suite), the user may supply any brand profile that covers tone, vocabulary, persona, and pacing.
+- **Brand profile:** following the schema in `shortform-idea-engine/references/brand-profile-template.md`. If no brand profile is supplied, ask the user to provide one or offer to build one via the `brand-profiler` skill before continuing. When used standalone (outside the full suite), the user may supply any brand profile that covers tone, vocabulary, persona, and pacing.
 
 ## Procedure
 

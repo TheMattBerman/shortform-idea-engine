@@ -9,7 +9,11 @@ Turn a keyword or niche into ranked outlier short-form videos across competitor 
 
 ## When to use
 
-Use this skill to discover outlier short-form videos by keyword across the direct, indirect, adjacent, and distant competitor rings. It is called by the `shortform-idea-engine` orchestrator as the discovery step that feeds the decode and ideation pipeline. It can also be run standalone when the job is pure discovery without a downstream idea-generation pass.
+Use this skill to discover outlier short-form videos by keyword across competitor rings. The valid rings are direct, indirect, adjacent, and distant. The caller (typically the `shortform-idea-engine` orchestrator) decides which rings to run: the orchestrator runs direct, indirect, and adjacent by default. Distant is a valid but lower-signal ring that the caller may include explicitly; this skill does not run it automatically.
+
+When run standalone, you may pass any combination of rings. This skill does not impose a fixed ring set.
+
+It is called by the `shortform-idea-engine` orchestrator as the discovery step that feeds the decode and ideation pipeline. It can also be run standalone when the job is pure discovery without a downstream idea-generation pass.
 
 Do not use this skill when you already know the creator handles and want post-level data (use the `scrape` skill instead). Virlo's value is in finding who is winning a niche when you do not know the handles yet.
 

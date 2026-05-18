@@ -37,22 +37,16 @@ Pull content from social platforms via ScrapeCreators API.
 | `--analyze` | Run through relevant analysis skill after scraping | false |
 | `--limit [n]` | Number of items to fetch | 10 |
 | `--output [path]` | Override default output location | (see routing) |
-| `--newsletter` | Route transcripts to `08-newsletter/research/` | false |
 
 ## Output Routing
 
-| Type | Default Location | Notes |
-|------|-----------------|-------|
-| Transcripts | `03-resources/` | `--newsletter` sends to `08-newsletter/research/` |
-| Posts | `09-swipe-files/hooks/` | Organized by platform |
-| Ads | `09-swipe-files/ads/` | Organized by brand |
-| Profiles | `03-resources/` | Creator research |
+By default, output is saved to `./scrape-output/` in the current working directory. Use `--output [path]` to override. The caller decides the final destination; this skill does not assume any particular project structure.
 
 ## Workflow
 
 ### 1. Load API Key
 ```bash
-source 04-claude-code/config/.env
+source .env
 ```
 
 Verify `SCRAPECREATORS_API_KEY` is set before proceeding.
@@ -84,7 +78,7 @@ Save to appropriate directory based on routing rules (or `--output` override).
 
 If `--analyze` flag is present:
 - Posts → run through hook analysis
-- Ads → run through `/image-breakdown`
+- Ads → summarize creative patterns; the analysis output can be fed to any downstream creative skill
 - Transcripts → summarize key points
 
 ---
@@ -218,11 +212,6 @@ scraped: 2025-01-15
 /scrape profile @alexhormozi instagram --analyze
 ```
 
-### Get Transcript for Newsletter Research
-```
-/scrape transcript https://youtube.com/watch?v=abc123 --newsletter
-```
-
 ---
 
 ## Setup
@@ -237,7 +226,7 @@ scraped: 2025-01-15
 
 1. Copy the example config:
    ```bash
-   cp 04-claude-code/config/.env.example 04-claude-code/config/.env
+   cp .env.example .env
    ```
 
 2. Add your API key:
@@ -247,7 +236,7 @@ scraped: 2025-01-15
 
 3. Verify setup:
    ```bash
-   source 04-claude-code/config/.env && echo "Key loaded: ${SCRAPECREATORS_API_KEY:0:10}..."
+   source .env && echo "Key loaded: ${SCRAPECREATORS_API_KEY:0:10}..."
    ```
 
 ---
@@ -286,10 +275,4 @@ Check your balance at [app.scrapecreators.com](https://app.scrapecreators.com).
 
 ## Integration with Other Skills
 
-| Skill | Integration |
-|-------|-------------|
-| `/ad-teardown` | Use scraped ads as input |
-| `/image-breakdown` | Analyze ad creatives |
-| `/positioning-angles` | Research competitor positioning |
-| `/content-atomizer` | Repurpose scraped transcripts |
-| `/direct-response-copy` | Swipe file reference |
+The `scrape` skill produces structured output (transcripts, posts, ad copy, profiles) that can feed any downstream creative or analysis skill. If you have a broader marketing-skills install, integrations like ad teardown, image breakdown, positioning analysis, content repurposing, and swipe file tools are all valid consumers of this skill's output.
