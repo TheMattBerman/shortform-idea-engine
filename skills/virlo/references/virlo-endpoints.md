@@ -78,8 +78,11 @@ Returns the job object. Check `status` field:
 
 - `queued` or `processing`: not ready, poll again.
 - `completed`: proceed to retrieval.
+- `failed`: terminal state. Do not retry more than twice; the job will not recover on its own. See the stop conditions in `reading-virlo.md` for guidance on narrowing the query and resubmitting.
 
 Poll cadence: start at 10s, back off to 30s. Typical completion: 1-5 minutes.
+
+The poll call returns the full orbit object. When `run_analysis: true` was set on submission, the `analysis` field (AI synthesis markdown) is present in this same response object once the job reaches `completed`. There is no separate endpoint for it.
 
 ```bash
 curl -s "https://api.virlo.ai/v1/orbit/orb_abc123" \
@@ -133,9 +136,7 @@ When running multiple ring queries (direct, indirect, adjacent), submit them **s
 
 **Handle case is not normalized.** `NanoTools` and `nanotools` register as two separate tracked creators. Always normalize to lowercase before submitting any handle to tracking endpoints.
 
-**Virlo is subscription-priced, not per-call.** The $0.50/orbit and $0.25/cycle costs are metered against a prepaid credit balance, not billed as individual API charges. A $5 minimum deposit is required. Running 10 ring queries in a session costs $5.00. Plan accordingly; do not run exploratory rings speculatively.
-
-**`run_analysis: true` is free on the same job.** The AI synthesis lives in the `analysis` field of the `GET /v1/orbit/:id` response. Retrieve it via the Phase 2 poll call (the full object endpoint), not a separate endpoint.
+**Virlo runs on a prepaid credit balance.** Each orbit submission costs $0.50 and deducts from the balance; polling and retrieval are free. Running four ring queries costs $2.00. A $5 minimum deposit is required to fund the account. Do not run exploratory rings speculatively.
 
 ---
 

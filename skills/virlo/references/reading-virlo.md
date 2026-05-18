@@ -6,9 +6,11 @@ How an operator reads Virlo results. This is not neutral documentation; it is op
 
 ## What Outlier Magnitude Means
 
-Outlier ratio is the ratio of a creator's average views on matched videos to their follower count. A ratio of 2.0 means the average matched video got twice as many views as the creator has followers. That is the reach floor: content punching at its own weight.
+Virlo's outlier ratio is the creator's average views on matched videos divided by their follower count. A ratio of 2.0 means the average matched video got twice as many views as the creator has followers. That is the reach floor: content punching at its own weight.
 
 **Default outlier threshold for ring analysis: 3.0.** Below 3.0, a creator is performing near-expectation and is not an outlier worth decoding. At 3.0-6.0, there is a repeatable signal worth examining. Above 6.0, something structural is working well enough to decode carefully.
+
+Note: this is distinct from the decode framework's `outlier_magnitude` field, which the orchestrator computes as a video's views divided by the creator's own recent-posts baseline. The two metrics answer different questions and must not be conflated when both are in use.
 
 When Virlo sorts by `weighted_score`, it is combining outlier ratio with absolute view size. Use `outlier_ratio` for format signal (what made something spread) and `weighted_score` for reach signal (which accounts matter most in the niche).
 
