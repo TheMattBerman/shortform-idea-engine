@@ -61,26 +61,17 @@ Check all three API keys. Report which modes are available before spending any c
 
 ### Stage 1: Discovery
 
-**Keyword mode.** Invoke the `virlo` skill to discover outlier short-form videos for the niche keyword. Orbit jobs are async: submit, poll until complete, then retrieve results. Run three separate orbit queries covering the three competitor rings defined in `video-decoder/references/decode-framework.md`:
+**Keyword mode.** Invoke the `virlo` skill to discover outlier short-form videos for the niche keyword. Run discovery across all three competitor rings defined in `video-decoder/references/decode-framework.md`:
 
 - Direct ring: the exact niche keyword as-is.
 - Indirect ring: audience-adjacent keyword phrases (same audience, different topic angle).
 - Adjacent ring: format-adjacent keyword phrases (same format or production style, different topic).
 
-Submit ring queries SEQUENTIALLY, not in parallel. Virlo caps concurrent orbit submissions at 2. Submit one ring, poll until `status: "completed"`, retrieve results, then submit the next ring.
+Invoke the `virlo` skill one ring at a time, passing the ring label and keyword phrase for that ring. Do not invoke virlo for multiple rings concurrently. The `virlo` skill owns all orbit mechanics: submission, the 2-concurrent cap, polling until completion, retrieval, and its own outlier judgment per its `reading-virlo.md`. The orchestrator's responsibility is sequencing: wait for virlo to return the ranked outlier list for a ring before invoking virlo for the next ring.
 
-For each ring, follow the virlo skill's documented orbit procedure:
+After virlo returns results for a ring, compute per-video outlier magnitude. Virlo's results include a creator-level outlier ratio, but the orchestrator needs a per-video ratio for Stage 4 and the Stage 6 ranking rubric. For each unique creator appearing in the ring results, invoke the `scrape` skill to fetch that creator's recent posts (roughly the last 20) on the relevant platform. Use the returned posts to compute a baseline median view count for that creator. Then compute each video's outlier ratio as `video_views / creator_median_views`. Save raw JSON responses to `raw/` for each ring and for each baseline fetch.
 
-1. Submit the orbit job: `/virlo orbit "<keyword_phrase>" --platforms instagram,tiktok,youtube --raw`. This queues the job and returns an `orbit_id`.
-2. Poll status with `/virlo orbit-status [orbit_id]` until `status: "completed"`.
-3. Retrieve outlier creators: `/virlo orbit-outliers [orbit_id] --limit 25`.
-4. Retrieve videos: call `GET /v1/orbit/[orbit_id]/videos` directly for the video list.
-
-After retrieving orbit videos, compute per-video outlier magnitude. Orbit results are raw videos with no baseline attached. For each unique creator appearing in the orbit results, fetch that creator's recent posts via the `scrape` skill (`/scrape posts [handle] [platform] --limit 20 --raw`) to establish their baseline median view count. Then compute each video's outlier ratio as `video_views / creator_median_views`. This step is required: Stage 4 and the Stage 6 ranking rubric depend on per-video outlier magnitude. Without it, outlier data is absent for all keyword-mode videos.
-
-Save raw JSON responses to `raw/` for each orbit and for each baseline fetch.
-
-**Handles mode.** Invoke the `scrape` skill for recent posts per handle: `/scrape posts [handle] [platform] --limit 20 --raw`. For each handle, compute the median view count across the returned posts. Keep only posts that beat that creator's own median by 2x or more (outlier threshold). Save raw JSON to `raw/`.
+**Handles mode.** Invoke the `scrape` skill to fetch recent posts (roughly the last 20) for each handle on the relevant platform. For each handle, compute the median view count across the returned posts. Keep only posts that beat that creator's own median by 2x or more (outlier threshold). Save raw JSON to `raw/`.
 
 If a handle yields zero posts above the 2x threshold (low-variance creator), include that creator's single top-performing recent post anyway. Note in `00-intake.md` that the handle had no clear outlier and that the top post was included as a fallback.
 
@@ -90,7 +81,7 @@ In both modes, the Stage 1 output is a de-duplicated list of outlier videos with
 
 For each outlier video, invoke the `scrape` skill to collect:
 
-- Transcript: `/scrape transcript [video_url]` for YouTube. For TikTok and Instagram, attempt to extract transcript text from the posts payload already fetched in Stage 1. If the posts payload contains no transcript for a video, invoke the `scrape` skill's transcript function as a fallback: `/scrape transcript [video_url]` before passing the video to Stage 3.
+- Transcript: for YouTube, invoke the `scrape` skill to fetch the transcript by video URL. For TikTok and Instagram, attempt to extract transcript text from the posts payload already fetched in Stage 1. If the posts payload contains no transcript for a video, invoke the `scrape` skill's transcript function for that video URL as a fallback before passing the video to Stage 3.
 - Cover frame: the thumbnail URL returned in the posts payload. For YouTube, derive the cover frame as `https://img.youtube.com/vi/[VIDEO_ID]/hqdefault.jpg`.
 
 Save all raw responses to `raw/` named by source and timestamp (e.g. `scrapecreators-transcript-[video_id]-[timestamp].json`). Every view count and engagement figure used downstream must trace to a file in `raw/`.
@@ -107,7 +98,7 @@ A missing transcript alone is NOT a reason to skip a video. Many of the highest-
 
 Select the top 5 to 8 outliers ranked by outlier magnitude (highest ratio first).
 
-Before calling the Gemini helper for any video, resolve the direct CDN media URL for that video using the `scrape` skill. A social page URL (e.g. a TikTok or Instagram page URL) is rejected by Gemini. Pass the CDN media URL to the helper, never the social page URL. Resolve and use CDN URLs promptly within the run, since CDN URLs expire.
+Before calling the Gemini helper for any video, resolve the direct CDN media URL for that video using the `scrape` skill. A social page URL (e.g. a TikTok or Instagram page URL) is rejected by Gemini. Pass the CDN media URL to the helper, never the social page URL. The resolution method differs by platform: consult `scrape/references/reading-scrape.md` under "Resolving a Direct Media URL for Video" for the per-platform approach (TikTok requires a video-info lookup; Instagram media URLs are in the already-fetched posts payload; YouTube watch URLs pass through directly). Resolve and use CDN URLs promptly within the run, since CDN URLs expire.
 
 For each selected video, call the Gemini helper and redirect stdout directly to the raw file in one command:
 
