@@ -11,8 +11,33 @@
 // The video_url content-part shape is confirmed by OpenRouter docs:
 //   { type: "video_url", video_url: { url } }
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MODEL = "google/gemini-3-flash-preview";
+
+// Resolve OPENROUTER_API_KEY: prefer the process env, fall back to a .env file
+// in `dir`. Zero-dependency, minimal .env parsing (KEY=value lines).
+export function loadEnvKey(dir = process.cwd(), env = process.env) {
+  if (env.OPENROUTER_API_KEY) return env.OPENROUTER_API_KEY;
+  let text;
+  try {
+    text = readFileSync(join(dir, ".env"), "utf8");
+  } catch {
+    return undefined;
+  }
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    if (trimmed.slice(0, eq).trim() === "OPENROUTER_API_KEY") {
+      return trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+    }
+  }
+  return undefined;
+}
 
 export async function analyzeVideo({ videoUrl, prompt, apiKey, fetchImpl = fetch }) {
   if (!videoUrl) throw new Error("videoUrl is required");
@@ -58,7 +83,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   analyzeVideo({
     videoUrl,
     prompt: promptParts.join(" "),
-    apiKey: process.env.OPENROUTER_API_KEY,
+    apiKey: loadEnvKey(),
   })
     .then((out) => console.log(out))
     .catch((err) => {
