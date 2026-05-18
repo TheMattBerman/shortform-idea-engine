@@ -1,0 +1,4 @@
+node_modules/
+.env
+shortform-runs/
+.DS_Store
