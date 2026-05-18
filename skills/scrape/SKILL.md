@@ -1,6 +1,6 @@
 ---
 name: scrape
-description: "Pull content from ScrapeCreators API for analysis, swipe files, or automation input. Supports YouTube transcripts, social media posts, ad creatives, and profile data. Triggers on: scrape transcript, scrape posts, scrape ads, scrape profile, get transcript, pull ads, grab posts."
+description: "Pull content from ScrapeCreators API for analysis, swipe files, or automation input. Supports TikTok, Instagram, and YouTube transcripts, social media posts, ad creatives, and profile data. Triggers on: scrape transcript, scrape posts, scrape ads, scrape profile, get transcript, pull ads, grab posts."
 ---
 
 # Scrape
@@ -23,7 +23,7 @@ Pull content from social platforms via ScrapeCreators API.
 | `profile` | handle + platform | `/scrape profile @alexhormozi instagram` |
 
 ### Supported Platforms
-- **transcript**: YouTube only
+- **transcript**: TikTok, Instagram, YouTube
 - **posts/profile**: TikTok, Instagram, Twitter/X
 - **ads**: Meta Ad Library (Facebook/Instagram ads)
 

@@ -94,7 +94,7 @@ Get videos from a TikTok profile.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/tiktok/profile/videos` |
+| **Endpoint** | `GET /v3/tiktok/profile/videos` |
 | **Credits** | 1 |
 
 **Parameters:**
@@ -106,7 +106,7 @@ Get videos from a TikTok profile.
 
 **Example Request:**
 ```bash
-curl -s "https://api.scrapecreators.com/v1/tiktok/profile/videos?handle=garyvee&sort_by=popular" \
+curl -s "https://api.scrapecreators.com/v3/tiktok/profile/videos?handle=garyvee&sort_by=popular" \
   -H "x-api-key: $SCRAPECREATORS_API_KEY"
 ```
 
@@ -115,17 +115,19 @@ curl -s "https://api.scrapecreators.com/v1/tiktok/profile/videos?handle=garyvee&
 ---
 
 ### Video Info
-Get details for a specific TikTok video.
+Get details for a specific TikTok video. Response includes the direct CDN media URL needed to feed video to Gemini or other vision models.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/tiktok/video` |
+| **Endpoint** | `GET /v2/tiktok/video` |
 | **Credits** | 1 |
 
 **Parameters:**
 | Param | Required | Description |
 |-------|----------|-------------|
 | `url` | Yes | TikTok video URL |
+
+**Note:** CDN media URLs in the response expire. Use them promptly after fetching.
 
 ---
 
@@ -134,7 +136,7 @@ Get transcript from a TikTok video.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/tiktok/transcript` |
+| **Endpoint** | `GET /v1/tiktok/video/transcript` |
 | **Credits** | 1 |
 
 **Parameters:**
@@ -177,7 +179,7 @@ Get posts from an Instagram profile.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/instagram/profile/posts` |
+| **Endpoint** | `GET /v2/instagram/user/posts` |
 | **Credits** | 1 |
 
 **Parameters:**
@@ -196,7 +198,7 @@ Get reels from an Instagram profile.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/instagram/profile/reels` |
+| **Endpoint** | `GET /v1/instagram/user/reels` |
 | **Credits** | 1 |
 
 **Parameters:**
@@ -213,7 +215,7 @@ Get AI-generated transcript from Instagram video content.
 
 | | |
 |---|---|
-| **Endpoint** | `GET /v1/instagram/post/transcript` |
+| **Endpoint** | `GET /v2/instagram/media/transcript` |
 | **Credits** | 1+ |
 | **Time** | 10-30 seconds (AI processing) |
 
@@ -343,13 +345,13 @@ Most list endpoints support cursor-based pagination:
 **Example:**
 ```bash
 # First page
-curl -s "https://api.scrapecreators.com/v1/tiktok/profile/videos?handle=garyvee" \
+curl -s "https://api.scrapecreators.com/v3/tiktok/profile/videos?handle=garyvee" \
   -H "x-api-key: $SCRAPECREATORS_API_KEY"
 
 # Response includes: "cursor": "abc123..."
 
 # Next page
-curl -s "https://api.scrapecreators.com/v1/tiktok/profile/videos?handle=garyvee&cursor=abc123" \
+curl -s "https://api.scrapecreators.com/v3/tiktok/profile/videos?handle=garyvee&cursor=abc123" \
   -H "x-api-key: $SCRAPECREATORS_API_KEY"
 ```
 
