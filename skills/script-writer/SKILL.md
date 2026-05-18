@@ -31,7 +31,7 @@ Write the hook as a complementary pair:
 - **Written hook (on-screen text):** the text overlay the viewer reads in the first 0-3 seconds.
 - **Spoken hook (VO):** the line said aloud over the same window.
 
-The two must complement each other, not duplicate. One can open the loop; the other can deepen it or add a contrasting layer.
+The two must complement each other, not duplicate. One can open the loop; the other can deepen it or add a contrasting layer. Each line must also be standalone-coherent: the spoken hook (VO) must be a complete, independently meaningful sentence that does not back-reference the written hook with words like "that plan", "this", or any pronoun that only makes sense after reading the on-screen text.
 
 ### 3. Body
 
@@ -45,9 +45,18 @@ At every beat where viewer drop-off typically spikes (seconds 3-5, mid-body, pre
 
 Write a close consistent with the brand's positioning and any format preferences stated in the brand profile. Match the energy of the body (do not abruptly shift tone).
 
-### 6. Shotlist
+### 6. Brand-voice lint pass
 
-For each beat plus the CTA, state what is on screen: talking head, b-roll description, text card, or screen recording. Keep it directive, not cinematic.
+Before writing the final script file, check every line of the drafted script against:
+
+(a) The brand profile's `forbidden_constructions` field: flag and fix any line that violates a listed rule.
+(b) Universal house rules: no em dashes (use commas, colons, or parentheses instead) and no `--` double-hyphen constructions.
+
+Fix all violations before proceeding. Do not output a script that contains any flagged construction. Example violations caught in test runs: an em dash used as a clause separator, and a "not X, it's Y" contrarian framing in a hook.
+
+### 7. Shotlist
+
+For each beat plus the CTA, state what is on screen. If the brand profile's `on_camera_talent` field is set to `none` or indicates a faceless brand, do not spec a talking-head shot anywhere in the shotlist. Use b-roll, text cards, screen recordings, or voiceover-over-visuals instead. If `on_camera_talent` names a specific presenter or the founder, the shotlist may use them by name. Keep the shotlist directive, not cinematic.
 
 ## Output
 

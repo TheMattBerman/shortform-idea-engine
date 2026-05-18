@@ -33,6 +33,7 @@ Field sequence:
 6. `forbidden_constructions` - Ask explicitly: are there any hard voice rules? Specific phrases, punctuation, or framing patterns the brand never uses? Common examples: no em dashes, no "not X it's Y" contrarian framing, no hype adjectives. This field is checked by the `script-writer` lint pass, so the more specific the better.
 7. `proof_credibility` - Ask: what can the brand authentically claim (metrics, track record, credentials)? If none yet, set to `none yet`.
 8. `format_preferences` - Ask: preferred video formats. Options: talking-head, b-roll-heavy, text-heavy, mixed.
+9. `on_camera_talent` - Ask: who is available to appear on camera? Accept: a named presenter (give their name), the founder, or state that the brand is faceless and has no on-camera talent.
 
 After collecting all fields, assemble the filled profile and show it to the user for confirmation before saving.
 
@@ -45,6 +46,7 @@ The user supplies a brand voice guide, style sheet, or other brand document. Rea
 - For `anti_topics`: look for content restrictions, off-limits subjects, or audience exclusions stated in the document.
 - Where the document is ambiguous or silent on a field, ask a single clarifying question for that field rather than guessing.
 - For `format_preferences` specifically: this field must resolve to one or more of the four allowed values (talking-head, b-roll-heavy, text-heavy, mixed). When asking the user about it, offer those four options explicitly rather than using an open question, to avoid collecting free text that must be mapped later.
+- For `on_camera_talent`: look for any mention of a host, presenter, founder, or face of the brand. If the document is silent on this, ask: who can appear on camera, or is this a faceless brand with no on-camera talent?
 
 After filling the schema, show the completed profile to the user and note any fields that were inferred (not explicitly stated) so the user can confirm or correct them.
 

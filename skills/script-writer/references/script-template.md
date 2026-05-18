@@ -22,6 +22,11 @@ Place one or more of these re-hook tactics at any beat where viewer drop-off typ
 
 ## Part 2: Script template
 
+**Hook rules (apply before filling the template):**
+
+- The written hook and the spoken hook must complement each other, not duplicate. One may open the loop; the other may deepen it or add a contrasting layer.
+- Each hook line must be standalone-coherent: it must parse on its own without reference to the other line. The spoken hook (VO) must be a complete, independently meaningful sentence. It must not back-reference the written hook with words like "that plan", "this", or any other pronoun or phrase that only makes sense after reading the on-screen text.
+
 ```
 # Script: <idea title>
 
@@ -31,7 +36,7 @@ Target length: <seconds>
 
 ## Hook (0-3s)
 Written hook (on-screen text): <text overlay, verbatim>
-Spoken hook (VO): <the line said aloud>
+Spoken hook (VO): <the line said aloud, complete and standalone>
 
 ## Body
 Beat 1 (<time range>): <what is said> | on-screen: <text/b-roll cue>
@@ -45,5 +50,7 @@ Retention marks: <which device fires at which beat/time>
 <brand-appropriate close>
 
 ## Shotlist
-- <beat>: <what is on screen: talking head, b-roll, text card>
+- <beat>: <what is on screen: talking head (only if on_camera_talent is set), b-roll, text card, screen recording>
 ```
+
+**Shotlist rule for `on_camera_talent`:** Check the brand profile before speccing shots. If `on_camera_talent` is `none` or the brand is faceless, every shotlist entry must use b-roll, text cards, screen recordings, or voiceover-over-visuals. Talking-head shots are not permitted. If `on_camera_talent` names a presenter or the founder, the shotlist may use them by name.
