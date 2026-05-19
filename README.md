@@ -10,7 +10,7 @@
 
 Built for Codex, Claude Code, OpenClaw-style workflows, and any agent that can read `SKILL.md` skill folders.
 
-**Built by Emerald Digital.**
+**Built by Matthew Berman.**
 
 ---
 
