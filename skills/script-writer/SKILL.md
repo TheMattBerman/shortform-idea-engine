@@ -64,9 +64,15 @@ Fix all violations before proceeding. The final script is produced as a single o
 
 For each beat plus the CTA, state what is on screen. The canonical no-talent value is `none`. If the brand profile's `on_camera_talent` field is `none` or otherwise clearly indicates no on-camera presenter, do not spec a talking-head shot anywhere in the shotlist. Use b-roll, text cards, screen recordings, or voiceover-over-visuals instead. Treat the field as "has talent" only when it names a specific person or role. If `on_camera_talent` names a specific presenter or the founder, the shotlist may use them by name. Keep the shotlist directive, not cinematic.
 
+### 8. Source lineage block
+
+Fill the Source lineage block from the idea's data. The idea object carries its borrowed Viral Vector, Interest Topic, and Format, and each of those was extracted from one or more specific Decode Records. For each borrowed element, write the label, the creator handle, and the source video URL from the corresponding Decode Record. Also list the Decode Record id(s) on the "Decoded in:" line.
+
+Lineage is mandatory. Every script ends with a filled Source lineage block, never blank or omitted. If the idea was assembled from elements that came from multiple source videos (VV from one, Format from another), each line names its own source.
+
 ## Output
 
-One markdown script per idea, following the template in `references/script-template.md` exactly. All sections must be present: Hook, Body (all beats with retention marks), CTA, Shotlist.
+One markdown script per idea, following the template in `references/script-template.md` exactly. All sections must be present: Hook, Body (all beats with retention marks), CTA, Shotlist, Source lineage.
 
 ## Reference
 

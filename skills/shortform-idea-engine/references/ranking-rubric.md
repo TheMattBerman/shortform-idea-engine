@@ -70,13 +70,14 @@ The gate table presents all ideas that survive the anti-topic gate. The orchestr
 Present the ranked idea table at the approval gate. Sort by `combined` descending. Use this exact column order:
 
 ```
-# | idea | root | borrowed VV/IT/Format | viral | brand fit | combined | one-line rationale
+# | idea | root | borrowed VV/IT/Format | source video | viral | brand fit | combined | one-line rationale
 ```
 
 - `#`: rank (1 = highest combined score)
 - `idea`: short name for the remixed concept (3-8 words)
 - `root`: the video root the idea was derived from (e.g. `Non-fiction > Tech + demo > demo`)
 - `borrowed VV/IT/Format`: which of the three extractables was borrowed and its label from the Decode Record
+- `source video`: the primary source video the idea traces to, shown as `@creator_handle / video_id` (or a short URL if the id alone is ambiguous). If the idea borrows elements from multiple source videos, list the handle/id for each separated by a comma. This is the proof visible at the gate without opening the Decode Records.
 - `viral`: the viral potential score
 - `brand fit`: the brand fit score
 - `combined`: the combined score

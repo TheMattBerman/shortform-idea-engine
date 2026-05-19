@@ -56,6 +56,15 @@ Retention marks: <which device fires at which beat/time>
 
 ## Shotlist
 - <beat>: <what is on screen: talking head (only if on_camera_talent names a presenter or founder), b-roll, text card, screen recording>
+
+## Source lineage
+Borrowed from:
+- Viral Vector: <vector> | from <creator handle>, <source video URL>
+- Interest Topic: <topic> | from <creator handle>, <source video URL>
+- Format: <format> | from <creator handle>, <source video URL>
+Decoded in: <decode record id(s)>
 ```
 
 **Shotlist rule for `on_camera_talent`:** Check the brand profile before speccing shots. The canonical no-talent value is `none`. If `on_camera_talent` is `none` or otherwise clearly indicates no on-camera presenter, every shotlist entry must use b-roll, text cards, screen recordings, or voiceover-over-visuals. Talking-head shots are not permitted. Treat the field as "has talent" only when it names a specific person or role. If `on_camera_talent` names a presenter or the founder, the shotlist may use them by name.
+
+**Source lineage rule:** Every script ends with a filled Source lineage block. Each line names the element borrowed and traces it to the creator handle and source video URL from the Decode Record. If a borrowed element traces to more than one source video, list each on its own line. The block is never blank or omitted.

@@ -124,6 +124,7 @@ Pool all Viral Vectors, Interest Topics, and Formats from every Decode Record in
 - Name which Interest Topic it borrows or adapts.
 - Name which Format it uses.
 - State the brand angle: how the borrowed VV, IT, and Format are remixed to fit this specific brand (use the brand profile's `content_pillars`, `audience`, and `proof_credibility` fields to anchor the angle).
+- Record source lineage for each borrowed element: the `creator_handle`, `source_url`, and `video_id` from the Decode Record(s) the element was extracted from. If an element appears in more than one Decode Record, list all of them. This lineage travels with the idea through ranking and into the script.
 
 Extraction signal weights by ring apply here (from `video-decoder/references/decode-framework.md`): VVs are valid from all four rings; ITs are highest-signal from indirect competitors; Formats are highest-signal from adjacent competitors. Weight your remixing accordingly but do not exclude ideas mechanically on ring alone.
 
@@ -137,7 +138,7 @@ Score every idea using `references/ranking-rubric.md`:
 2. Score surviving ideas on two axes: `viral_potential` (average of five sub-factors: VV strength, outlier magnitude, format repeatability, topic freshness, hook strength) and `brand_fit` (average of four sub-factors: voice match, audience match, content-pillar match, authentic credibility). Both scores use a 1 to 10 scale.
 3. Compute `combined = viral_potential * (brand_fit / 10)`. Round to one decimal place.
 4. Sort descending by `combined`. When two ideas tie, the one with the higher `viral_potential` ranks first.
-5. Write the ranked table to `02-ideas.md` in this column order: `# | idea | root | borrowed VV/IT/Format | viral | brand fit | combined | one-line rationale`.
+5. Write the ranked table to `02-ideas.md` in this column order: `# | idea | root | borrowed VV/IT/Format | source video | viral | brand fit | combined | one-line rationale`. The `source video` cell shows the primary source video the idea traces to as `@creator_handle / video_id`. If the idea borrows elements from multiple source videos, list each handle/id pair separated by a comma. Populate this cell from the source lineage recorded in Stage 5.
 6. Append "shallow-decoded" to the `one-line rationale` for any idea whose source video(s) did not receive a deep pass, for ANY reason: `OPENROUTER_API_KEY` was missing, OR the source video ranked below the top 5-8 cutoff and was not selected for Stage 4, OR the deep pass attempt failed for that video.
 
 ---
@@ -154,7 +155,7 @@ Default: suggest the top 3 to 5 ideas. The user may pick any subset, reorder, or
 
 For each approved idea, invoke the `script-writer` skill. Pass in:
 
-- The approved idea object: borrowed VV label, IT label, Format label, and the brand angle written in Stage 5.
+- The approved idea object: borrowed VV label, IT label, Format label, the brand angle written in Stage 5, and the source lineage recorded in Stage 5 (creator handle, source URL, and video id for each borrowed element).
 - The full brand profile content: read the brand profile file from the path collected in Stage 0 and pass its content to `script-writer`, not the path string itself.
 
 The `script-writer` skill returns one markdown script per idea, following the template in `script-writer/references/script-template.md` (Hook, Body beats with retention marks, CTA, Shotlist). Write each script to `03-scripts/[idea-slug].md`.
