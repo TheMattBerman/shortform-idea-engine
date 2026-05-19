@@ -113,6 +113,14 @@ A format is reusable. The same format applied to a different IT with a strong VV
 
 ---
 
+## The three hooks
+
+A short-form video has three hooks, ranked by importance: visual hook (what is on screen), written hook (on-screen text), spoken hook (the voiceover line). Eyes comprehend before ears, so the visual and written hooks carry more weight than the spoken hook.
+
+When decoding, note how tightly the three hooks align onto one idea. A winning video usually has all three reinforcing the same idea. Tight alignment is often itself part of why the video won, and can surface as a Viral Vector.
+
+---
+
 ## Decode Record Schema
 
 Every decoded video produces one Decode Record. Fields must be populated in order. Do not skip fields; use `n/a` only when a field is genuinely inapplicable (e.g. `written_hook` on a video with no on-screen text).
@@ -126,6 +134,7 @@ platform:            tiktok | instagram | youtube | other
 creator_handle:
 outlier_magnitude:   views vs the creator's own baseline (e.g. "8x baseline")
 competitor_ring:     direct | indirect | adjacent | distant
+visual_hook:         what is on screen in the opening seconds: scene, subject, framing; on a deep decode, also the action and pattern interrupt
 written_hook:        verbatim on-screen text from the cover frame
 written_hook_notes:  placement, style, the curiosity gap it opens
 spoken_hook:         first ~3 seconds of the transcript, verbatim
@@ -141,6 +150,8 @@ decode_depth:        shallow (transcript + cover only) | deep (Gemini pass inclu
 **Field notes:**
 
 `outlier_magnitude`: baseline = the median view count across the creator's recent comparable videos on the same platform (roughly their last 20 posts). Express the ratio against that baseline, e.g. "8x baseline".
+
+`visual_hook`: on a shallow decode, fill this from the cover frame (the static scene, subject, and framing). On a deep decode, enrich it with the motion layer from the Gemini pass: the opening action, the pattern interrupt, and first-seconds movement. `visual_hook` is always populated; it gets richer on a deep decode.
 
 `deep_notes`: populated only when `decode_depth` is `deep`, meaning a Gemini visual-analysis pass was supplied. Leave blank for shallow decodes.
 
