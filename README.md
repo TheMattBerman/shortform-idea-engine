@@ -50,6 +50,10 @@ Skills are namespaced under the plugin name when invoked. The orchestrator is:
 /shortform-idea-engine:shortform-idea-engine
 ```
 
+### Install on other agents
+
+This kit also runs on Codex CLI and any other agent that loads SKILL.md-format skill folders. See [docs/install.md](docs/install.md) for all three install paths and host requirements.
+
 ---
 
 ## Quick Start
