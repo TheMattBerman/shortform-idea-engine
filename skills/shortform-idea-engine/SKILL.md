@@ -23,7 +23,7 @@ This is a self-contained plugin. It bundles all sub-skills and the Gemini helper
 |---|---|
 | `virlo` skill (bundled) | Stage 1 keyword mode: discovers outlier short-form videos by niche keyword across Instagram, TikTok, and YouTube |
 | `scrape` skill (bundled) | Stage 1 handles mode, Stage 2, and Stage 4 CDN URL resolution: pulls recent posts, transcripts, cover frames, and direct media URLs via ScrapeCreators API |
-| `video-decoder` skill | Stage 3 and Stage 4: decodes each outlier into a filled Decode Record (written hook, spoken hook, root, VV, IT, Format) |
+| `video-decoder` skill | Stage 3 and Stage 4: decodes each outlier into a filled Decode Record (visual hook, written hook, spoken hook, root, VV, IT, Format) |
 | `script-writer` skill | Stage 7: writes one production-ready script per approved idea |
 | `brand-profiler` skill (bundled) | Stage 0: builds a new brand profile when none exists, collecting all schema fields including `voice_tone` |
 | `scripts/gemini-video-analyze.js` (bundled) | Stage 4 deep pass: runs visual analysis (pacing, cut rhythm, visual style, retention devices, text-on-screen cadence) via OpenRouter Gemini |

@@ -52,7 +52,7 @@ Write a close consistent with the brand's positioning and any format preferences
 
 ### 6. Brand-voice lint pass
 
-This step runs on the fully drafted, internally-held script before any output is produced. Do not output or write the script until the lint pass clears. Check every line of the drafted script, including the written and spoken hook lines drafted in step 2, against:
+This step runs on the fully drafted, internally-held script before any output is produced. Do not output or write the script until the lint pass clears. Check every line of the drafted script, including all three hook lines (visual, written, spoken) drafted in step 2, against:
 
 (a) The brand profile's `forbidden_constructions` field: flag and fix any line that violates a listed rule.
 (b) Universal house rules: no em dashes (use commas, colons, or parentheses instead) and no `--` double-hyphen constructions.
