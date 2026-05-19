@@ -26,6 +26,10 @@ Place one or more of these re-hook tactics at any beat where viewer drop-off typ
 
 - The written hook and the spoken hook must complement each other, not duplicate. One may open the loop; the other may deepen it or add a contrasting layer.
 - Each hook line must be standalone-coherent: it must parse on its own without reference to the other line. The spoken hook (VO) must be a complete, independently meaningful sentence. It must not back-reference the written hook with words like "that plan", "this", or any other pronoun or phrase that only makes sense after reading the on-screen text.
+- Role split: each hook answers its own question. Visual hook answers "what is happening?" Written hook answers "what does this mean for me?" Spoken hook answers "why should I care, and what is coming next?" Keeping the roles distinct is what makes standalone coherence automatic.
+- Alignment: all three hooks must lock onto one idea. If the visual implies one story, the text another, and the voiceover a third, the viewer gets confused and leaves. The three hooks reinforce a single idea.
+- Length: the written (on-screen) hook is 3 to 7 words, with a hard ceiling of about 10. It is a headline, not a sentence, readable in under a second. The spoken hook carries the nuance in 2 to 4 short sentences. The written hook just names the tension or the promise.
+- Spoken hook pattern (recommended guidance, not a hard rule): a strong default is context lean, then contrast, then a contrarian snapback, delivered staccato, on one subject. Override this pattern when forcing it makes the hook read worse.
 
 ```
 # Script: <idea title>
@@ -35,7 +39,8 @@ Borrowed from: VV <viral vector> | IT <interest topic> | Format <format>
 Target length: <seconds>
 
 ## Hook (0-3s)
-Written hook (on-screen text): <text overlay, verbatim>
+Visual hook (on screen): <the opening shot, scene, or action the viewer sees>
+Written hook (on-screen text): <text overlay, verbatim, 3-7 words>
 Spoken hook (VO): <the line said aloud, complete and standalone>
 
 ## Body
