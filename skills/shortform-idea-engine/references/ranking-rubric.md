@@ -14,7 +14,7 @@ Score on five sub-factors, then average them into a single `viral_potential` sco
 | Outlier magnitude | How strong is the evidence that this Viral Vector works? Measured by how far above baseline the source video(s) performed. A 10x+ outlier is high-confidence evidence; a 2x outlier is low-confidence. 5 = the source video outperformed channel baseline by roughly 4-6x, giving moderate confidence the VV is transferable. |
 | Format repeatability | Has this format produced multiple winners across creators, or is it a one-hit anomaly? 5 = the format has won for two or three creators but has not yet become a saturated convention. |
 | Topic freshness | Is the topic undersaturated or already flooding feeds? Fresher scores higher. 5 = the topic is active but not saturated, visible in feeds but not dominant. |
-| Hook strength | How hard does the proposed hook hit in the first 2-3 seconds? Rate the written or spoken hook on its own. 5 = the hook creates clear curiosity or stakes but does not yet feel urgent or surprising enough to stop a fast scroll. |
+| Hook strength | How hard do the hooks hit across all three hook types (visual, written, spoken)? Weight toward visual and written, because eyes comprehend before ears. A set of hooks that lock onto one idea (all three reinforce the same angle) scores higher than misaligned hooks even if individual hooks are strong. 5 = the visual and written hooks create clear curiosity or stakes but do not yet feel urgent or surprising enough to stop a fast scroll, or the hooks are individually decent but not fully aligned to one angle. |
 
 A score of 1 means the idea is unlikely to outperform baseline. A score of 10 means all five sub-factors are exceptional.
 
