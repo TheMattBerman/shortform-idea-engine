@@ -1,6 +1,6 @@
 ---
 name: video-decoder
-description: "Decode a single short-form video into its reusable components: root category, written hook, spoken hook, Viral Vector, Interest Topic, and Format, using a short-form video decode framework. Use when the user wants to understand why one video works or break down a competitor video. Triggers on: decode this video, break down this video, why did this video work, analyze this short."
+description: "Decode a single short-form video into its reusable components: root category, visual hook, written hook, spoken hook, Viral Vector, Interest Topic, and Format, using a short-form video decode framework. Use when the user wants to understand why one video works or break down a competitor video. Triggers on: decode this video, break down this video, why did this video work, analyze this short."
 ---
 
 # Video Decoder
@@ -33,7 +33,7 @@ Fetch the transcript and cover frame using the `scrape` skill:
 - Record the `platform`, `creator_handle`, and native `video_id` from the response.
 - Record `outlier_magnitude`: compare this video's view count against the median of the creator's last 20 comparable posts on the same platform. Express as a ratio (e.g. "8x baseline"). If the input is a bare URL rather than a pre-fetched post object and no baseline data is available yet, run `/scrape posts [creator_handle] [platform]` to collect roughly 20 recent posts and use the median of their view counts as the baseline. If baseline data is still unavailable after that, set `outlier_magnitude: n/a`.
 
-### 2. Written hook and visual hook
+### 2. Visual hook and written hook
 
 Use vision on the cover frame image. The written hook and the visual hook are two separate things read from the same image: the written hook is the on-screen text; the visual hook is the scene itself.
 

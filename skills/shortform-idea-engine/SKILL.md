@@ -90,7 +90,7 @@ Save all raw responses to `raw/` named by source and timestamp (e.g. `scrapecrea
 
 Run the `video-decoder` skill on every outlier. Pass in: the transcript text (if available), the cover frame URL (if available), the creator handle, the platform, the outlier magnitude (ratio computed in Stage 1), and the competitor ring assignment (classify each video's ring relative to the brand using the ring definitions in `video-decoder/references/decode-framework.md`).
 
-The `video-decoder` skill returns one filled Decode Record per video, including the written hook, spoken hook, and visual hook (derived from the cover frame and any visible text-on-screen). Write each record to `01-decodes/[video_id].md`. At this point all decodes have `decode_depth: shallow`.
+The `video-decoder` skill returns one filled Decode Record per video, including the visual hook (derived from the cover frame and any visible text-on-screen), written hook, and spoken hook. Write each record to `01-decodes/[video_id].md`. At this point all decodes have `decode_depth: shallow`.
 
 A missing transcript alone is NOT a reason to skip a video. Many of the highest-outlier videos are text-overlay or POV-style videos with no spoken content. If the video has a cover frame or a caption, decode it shallow with `spoken_hook: n/a`. Skip a video only when there is genuinely nothing to decode: no transcript, no cover frame, no caption, AND no other meaningful signal (e.g. a hard fetch failure with nothing retrievable). Record any skipped video as `decode-failed` in `00-intake.md` with the video URL and the exact reason. Continue processing the remaining videos.
 
