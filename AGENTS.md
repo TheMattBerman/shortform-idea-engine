@@ -33,3 +33,9 @@ The orchestrator calls `virlo`, `scrape`, `video-decoder`, and `script-writer` a
 
 - `docs/install.md`: install paths and plugin setup.
 - `docs/setup.md`: required API keys, costs, and graceful-degradation behavior.
+
+## Packaging
+
+- Claude Code plugin manifest: `.claude-plugin/plugin.json`.
+- Codex plugin manifest: `.codex-plugin/plugin.json`.
+- Direct skill install fallback: `./install.sh codex` copies the six skill folders into `~/.codex/skills/`.

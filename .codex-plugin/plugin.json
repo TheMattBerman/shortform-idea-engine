@@ -1,0 +1,40 @@
+{
+  "name": "shortform-idea-engine",
+  "version": "0.1.0",
+  "description": "Turn competitor short-form videos into ranked, brand-fit video ideas and scripts. Discovers outlier videos, decodes why they work, remixes them against a brand profile, ranks them, and scripts the top picks.",
+  "author": {
+    "name": "Emerald Digital"
+  },
+  "homepage": "https://github.com/Emerald-Digital/shortform-idea-engine",
+  "repository": "https://github.com/Emerald-Digital/shortform-idea-engine",
+  "license": "MIT",
+  "keywords": [
+    "short-form-video",
+    "content-strategy",
+    "video-scripts",
+    "competitor-research",
+    "creative-strategy",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Short-Form Idea Engine",
+    "shortDescription": "Generate ranked short-form video ideas and scripts",
+    "longDescription": "Short-Form Idea Engine turns competitor short-form videos into ranked, brand-fit video ideas and production-ready scripts through a six-skill research, decoding, remixing, ranking, and writing workflow.",
+    "developerName": "Emerald Digital",
+    "category": "Marketing",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Emerald-Digital/shortform-idea-engine",
+    "defaultPrompt": [
+      "Turn competitor videos into ranked script ideas",
+      "Decode this short-form video for hooks",
+      "Write scripts from approved short-form ideas"
+    ],
+    "brandColor": "#0F766E",
+    "screenshots": []
+  }
+}

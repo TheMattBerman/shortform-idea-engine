@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide covers the three ways to run the Short-Form Idea Engine: as a Claude Code plugin, on Codex CLI, and on any other agent that loads SKILL.md-format skill folders.
+This guide covers four ways to run the Short-Form Idea Engine: as a Claude Code plugin, as a native Codex plugin, on Codex CLI through direct skill installation, and on any other agent that loads SKILL.md-format skill folders.
 
 After installing, complete the API key setup in [docs/setup.md](setup.md) before running the pipeline.
 
@@ -24,7 +24,25 @@ No copy step is needed. Claude Code reads the skills directly from the repo dire
 
 ---
 
-## Codex CLI
+## Codex native plugin
+
+The repo includes a Codex plugin manifest at:
+
+```text
+.codex-plugin/plugin.json
+```
+
+That manifest points Codex at the bundled skill folders with:
+
+```json
+"skills": "./skills/"
+```
+
+Use this path when installing the repo through Codex's native plugin flow or a Codex marketplace entry. The Claude Code plugin manifest remains at `.claude-plugin/plugin.json`, so the same repo can be used by both hosts.
+
+---
+
+## Codex CLI direct skills install
 
 Run the install script from the repo root:
 
@@ -33,6 +51,8 @@ Run the install script from the repo root:
 ```
 
 This copies the six skill folders into `~/.codex/skills/`. Then restart Codex. The skills are available by name without a namespace prefix once Codex picks them up.
+
+Use this direct skills install when you are not installing the repo through the native Codex plugin flow.
 
 ---
 
