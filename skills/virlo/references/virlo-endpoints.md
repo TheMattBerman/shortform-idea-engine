@@ -118,6 +118,85 @@ Useful query params: `order_by` (`views`, `likes`, `publish_date`), `sort`, `lim
 
 ---
 
+## Comets: Recurring Niche Monitors
+
+A Comet is a Virlo recurring monitor. It runs the same keyword search on a schedule and accumulates outlier creators and videos over time. Reading a Comet's accumulated results is **free** (no orbit submission cost), and the data is often richer than a single fresh Orbit because it compounds across multiple execution cycles.
+
+**Before firing a new Orbit for a ring, list existing Comets and check for a match.** If a Comet already covers the ring keyword, retrieve its accumulated outliers and videos instead. Only submit a new Orbit when no matching Comet exists for that ring.
+
+### List existing Comets
+
+```
+GET /v1/comet
+```
+
+**Cost:** Free.
+
+Optional query param: `include_inactive` (boolean) to include stopped monitors.
+
+Returns an array of Comet config objects. Each object includes the Comet `id`, `name`, `keywords`, `platforms`, `cadence`, `last_run_at`, `next_run_at`, and `is_processing`.
+
+```bash
+curl -s "https://api.virlo.ai/v1/comet" \
+  -H "Authorization: Bearer $VIRLO_API_KEY" | jq '.[] | {id, name, keywords}'
+```
+
+To determine whether a Comet covers a ring keyword, compare the ring's keyword set against the Comet's `keywords` array and `name`. A Comet "matches" a ring when its keywords substantially overlap the ring keyword or the same niche label appears in the Comet name.
+
+### Retrieve a Comet's accumulated outlier creators
+
+```
+GET /v1/comet/:id/creators/outliers
+```
+
+**Cost:** Free.
+
+Useful query params: same as the Orbit outliers endpoint (`order_by`, `sort`, `limit`, `platform`). Returns creators accumulated across all completed executions of this Comet.
+
+```bash
+curl -s "https://api.virlo.ai/v1/comet/cmt_abc123/creators/outliers?order_by=outlier_ratio&sort=desc&limit=20" \
+  -H "Authorization: Bearer $VIRLO_API_KEY"
+```
+
+### Retrieve a Comet's accumulated videos
+
+```
+GET /v1/comet/:id/videos
+```
+
+**Cost:** Free.
+
+Useful query params: `order_by` (`views`, `likes`, `publish_date`), `sort`, `limit`, `page`, `min_views`, `platforms`, `start_date`, `end_date`.
+
+```bash
+curl -s "https://api.virlo.ai/v1/comet/cmt_abc123/videos?order_by=views&sort=desc&limit=20" \
+  -H "Authorization: Bearer $VIRLO_API_KEY"
+```
+
+### Create a new Comet (for future reuse)
+
+```
+POST /v1/comet
+Content-Type: application/json
+```
+
+**Cost:** $0.50 per scheduled execution (same as Orbit per run).
+
+| Parameter | Type | Required | Notes |
+|---|---|---|---|
+| `name` | string | Yes | Human-readable label for the monitor |
+| `keywords` | array | Yes | 1-20 keyword strings |
+| `platforms` | array | No | Any of `youtube`, `tiktok`, `instagram` |
+| `cadence` | string | No | `daily`, `weekly`, `monthly`, or custom cron (minimum daily) |
+| `min_views` | integer | No | View floor per execution |
+| `time_range` | string | No | Lookback window per execution |
+| `meta_ads_enabled` | boolean | No | Also collect Meta ads |
+| `exclude_keywords` | array | No | Terms to filter out |
+
+**Source:** Endpoint paths verified against the Virlo API reference at `.agents/skills/virlo/references/virlo-endpoints.md` in the Emerald Digital vault (third-party skill, documented independently from live usage).
+
+---
+
 ## Orbit Concurrency Cap
 
 Virlo caps concurrent orbit submissions at **2 active jobs at a time**.
