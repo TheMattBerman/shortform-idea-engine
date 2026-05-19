@@ -66,7 +66,7 @@ For each beat plus the CTA, state what is on screen. The canonical no-talent val
 
 ### 8. Source lineage block
 
-Fill the Source lineage block from the idea's data. The idea object carries its borrowed Viral Vector, Interest Topic, and Format, and each of those was extracted from one or more specific Decode Records. For each borrowed element, write the label, the creator handle, and the source video URL from the corresponding Decode Record. Also list the Decode Record id(s) on the "Decoded in:" line.
+Fill the Source lineage block from the idea's data. The idea object carries its borrowed Viral Vector, Interest Topic, and Format, and each of those was extracted from one or more specific Decode Records. For each borrowed element, write the label, the creator handle, and the source video URL from the corresponding Decode Record. Also list the Decode Record id(s) on the "Decoded in:" line. The decode record id is the source video's `video_id` (decode records are stored as `01-decodes/[video_id].md`).
 
 Lineage is mandatory. Every script ends with a filled Source lineage block, never blank or omitted. If the idea was assembled from elements that came from multiple source videos (VV from one, Format from another), each line names its own source.
 

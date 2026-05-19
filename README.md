@@ -11,7 +11,7 @@ Point it at a niche keyword or a list of competitor handles. It discovers which 
 The orchestrator runs a ten-step pipeline (Stage 0 through Stage 8, plus an explicit user approval gate between ranking and scripting):
 
 1. **Stage 0 - Intake:** confirms mode (keyword or handles), loads your brand profile, checks API keys, and reports which modes are available before spending any credits.
-2. **Stage 1 - Discovery:** finds outlier videos either by niche keyword across direct, indirect, and adjacent competitor rings (Virlo) or by analyzing specific competitor handles (ScrapeCreators).
+2. **Stage 1 - Discovery:** finds outlier videos either by niche keyword across direct, indirect, and adjacent competitor rings (Virlo) or by analyzing specific competitor handles (ScrapeCreators). In keyword mode, Virlo reuses an existing matching Comet (free) when one is available and fires a fresh Orbit (which costs credits) only for rings with no Comet coverage.
 3. **Stage 2 - Receipts:** collects transcripts and cover frames for every outlier.
 4. **Stage 3 - Decode:** runs each outlier through the video-decoder skill to extract its visual hook, written hook, spoken hook, Viral Vector, Interest Topic, and Format.
 5. **Stage 4 - Deep pass:** for the top 5 to 8 outliers by magnitude, runs a Gemini visual analysis of pacing, cut rhythm, and retention devices (requires OpenRouter key).
