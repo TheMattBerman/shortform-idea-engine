@@ -100,13 +100,17 @@ Select the top 5 to 8 outliers ranked by outlier magnitude (highest ratio first)
 
 Before calling the Gemini helper for any video, resolve the direct CDN media URL for that video using the `scrape` skill. A social page URL (e.g. a TikTok or Instagram page URL) is rejected by Gemini. Pass the CDN media URL to the helper, never the social page URL. The resolution method differs by platform: consult `scrape/references/reading-scrape.md` under "Resolving a Direct Media URL for Video" for the per-platform approach (TikTok requires a video-info lookup; Instagram media URLs are in the already-fetched posts payload; YouTube watch URLs pass through directly). Resolve and use CDN URLs promptly within the run, since CDN URLs expire.
 
-For each selected video, call the Gemini helper and redirect stdout directly to the raw file in one command:
+For each selected video, call the Gemini helper and redirect stdout directly to the raw file in one command.
+
+The helper path must be resolved as an absolute path from the directory that contains this SKILL.md (the `shortform-idea-engine` skill directory within the installed plugin). Determine that directory at runtime and construct the absolute path to `scripts/gemini-video-analyze.js` within it. The output redirect targets the run folder under the run base path confirmed in Stage 0. These two paths are resolved independently: the helper from the skill directory, the output from the run base path.
 
 ```bash
-OPENROUTER_API_KEY=<key> node scripts/gemini-video-analyze.js <cdnMediaUrl> "Analyze this short-form video for: pacing (average cut frequency, notable slow or fast segments), cut rhythm (pattern of cuts: cut-on-beat, reaction cuts, b-roll intercuts), visual style (color grading, background, camera movement, on-screen graphic density), text-on-screen cadence (how often captions or callouts appear relative to spoken content), and retention devices (specific hooks, pattern interrupts, cliffhangers, or loops used mid-video). Return structured notes for each dimension." > raw/gemini-<video_id>-<timestamp>.json
+OPENROUTER_API_KEY=<key> node <skill-dir>/scripts/gemini-video-analyze.js <cdnMediaUrl> "Analyze this short-form video for: pacing (average cut frequency, notable slow or fast segments), cut rhythm (pattern of cuts: cut-on-beat, reaction cuts, b-roll intercuts), visual style (color grading, background, camera movement, on-screen graphic density), text-on-screen cadence (how often captions or callouts appear relative to spoken content), and retention devices (specific hooks, pattern interrupts, cliffhangers, or loops used mid-video). Return structured notes for each dimension." > <run-base>/YYYY-MM-DD-<slug>/raw/gemini-<video_id>-<timestamp>.json
 ```
 
-The redirect saves the raw Gemini response to `raw/gemini-<video_id>-<timestamp>.json` so Stage 8 traceability can be satisfied.
+Where `<skill-dir>` is the absolute path to the `shortform-idea-engine` skill directory (the directory containing this SKILL.md) and `<run-base>/YYYY-MM-DD-<slug>/` is the run folder confirmed in Stage 0.
+
+The redirect saves the raw Gemini response to `raw/gemini-<video_id>-<timestamp>.json` inside the run folder so Stage 8 traceability can be satisfied.
 
 Re-run the `video-decoder` skill for each of these videos, passing the Gemini block as the optional deep-analysis input. The re-run returns an updated Decode Record with `decode_depth: deep` and `deep_notes` populated. Overwrite the existing `01-decodes/[video_id].md` with the deep record.
 
