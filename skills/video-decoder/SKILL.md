@@ -33,14 +33,22 @@ Fetch the transcript and cover frame using the `scrape` skill:
 - Record the `platform`, `creator_handle`, and native `video_id` from the response.
 - Record `outlier_magnitude`: compare this video's view count against the median of the creator's last 20 comparable posts on the same platform. Express as a ratio (e.g. "8x baseline"). If the input is a bare URL rather than a pre-fetched post object and no baseline data is available yet, run `/scrape posts [creator_handle] [platform]` to collect roughly 20 recent posts and use the median of their view counts as the baseline. If baseline data is still unavailable after that, set `outlier_magnitude: n/a`.
 
-### 2. Written hook
+### 2. Written hook and visual hook
 
-Use vision on the cover frame image.
+Use vision on the cover frame image. The written hook and the visual hook are two separate things read from the same image: the written hook is the on-screen text; the visual hook is the scene itself.
+
+**Written hook:**
 
 - Read every on-screen text overlay verbatim. That is the `written_hook`.
 - Note placement (top/center/bottom, full-width/corner), visual style (font weight, color, capitalization), and the curiosity gap the text opens.
 - Record these observations as `written_hook_notes`.
 - If the cover frame has no text overlay, set `written_hook` to `n/a` and `written_hook_notes` to a brief description of the visual composition instead.
+
+**Visual hook (shallow decode):**
+
+- Describe the opening scene: who or what is on screen, the composition (framing, angle, depth), and any immediately striking visual element.
+- Write this description into the `visual_hook` field.
+- Do not copy the written hook text here. `visual_hook` is the scene, not the text overlay.
 
 ### 3. Spoken hook
 
@@ -80,11 +88,13 @@ Extract the following from the Gemini deep-analysis block and populate `deep_not
 - Text-on-screen cadence: how often captions or callouts appear relative to spoken content.
 - Retention devices: specific hooks, pattern interrupts, cliffhangers, or loops used mid-video.
 
+Also enrich `visual_hook` with the motion layer from the Gemini block: append the opening action (what is physically happening in the first seconds), the pattern interrupt (any jarring or unexpected visual move), and first-seconds movement (camera or subject motion). Keep the scene description from Step 2 as the base and add the motion detail after it.
+
 If no Gemini block was provided, skip this step and leave `deep_notes` blank.
 
 ## Output
 
-Emit one filled Decode Record following the schema in `references/decode-framework.md` exactly: all 16 fields, in the order defined there. Populate every field; use `n/a` only when a field is genuinely inapplicable. Set `decode_depth` to `deep` if Step 6 ran, otherwise `shallow`.
+Emit one filled Decode Record following the schema in `references/decode-framework.md` exactly: all 17 fields, in the order defined there. Populate every field; use `n/a` only when a field is genuinely inapplicable. Set `decode_depth` to `deep` if Step 6 ran, otherwise `shallow`.
 
 ## Reference
 
