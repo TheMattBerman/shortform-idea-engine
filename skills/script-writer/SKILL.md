@@ -1,6 +1,6 @@
 ---
 name: script-writer
-description: "Write a production-ready short-form video script from an approved idea and a brand profile. Produces a paired written and spoken hook, beat-by-beat body, retention marks, CTA, and a light shotlist. Use when the user has a video idea and wants it scripted in their brand voice. Triggers on: script this idea, write a short-form script, turn this into a video script."
+description: "Write a production-ready short-form video script from an approved idea and a brand profile. Produces a three-hook block (visual, written, spoken), beat-by-beat body, retention marks, CTA, and a light shotlist. Use when the user has a video idea and wants it scripted in their brand voice. Triggers on: script this idea, write a short-form script, turn this into a video script."
 ---
 
 # Script Writer
@@ -28,12 +28,15 @@ Restate the borrowed VV, IT, and Format. Confirm the brand angle. If anything is
 
 ### 2. Hook block
 
-Write the hook as a complementary pair:
+Write all three hooks for the 0-3 second window. Draft visual first, then written, then spoken.
 
-- **Written hook (on-screen text):** the text overlay the viewer reads in the first 0-3 seconds.
-- **Spoken hook (VO):** the line said aloud over the same window.
+- **Visual hook (on screen):** the opening shot, scene, or action the viewer sees. It answers "what is happening?" It is distinct from the shotlist (which covers all beats); the visual hook is the opening moment only.
+- **Written hook (on-screen text):** the text overlay the viewer reads in the first 0-3 seconds. It answers "what does this mean for me?" Length must be 3 to 7 words (hard ceiling about 10). It is a headline, not a sentence, readable in under a second.
+- **Spoken hook (VO):** the line said aloud over the same window. It answers "why should I care, and what is coming next?" It must be a complete, independently meaningful sentence and must not back-reference the written hook with words like "that plan", "this", or any pronoun that only makes sense after reading the on-screen text.
 
-The two must complement each other, not duplicate. One can open the loop; the other can deepen it or add a contrasting layer. Each line must also be standalone-coherent: the spoken hook (VO) must be a complete, independently meaningful sentence that does not back-reference the written hook with words like "that plan", "this", or any pronoun that only makes sense after reading the on-screen text.
+The three hooks must align onto one idea. If the visual implies one story, the text another, and the voiceover a third, the viewer gets confused and leaves. Written and spoken must complement each other, not duplicate: one can open the loop, the other can deepen it or add a contrasting layer.
+
+See `references/script-template.md` for the full hook rules (role split, alignment, standalone-coherence, length, spoken-hook pattern guidance).
 
 ### 3. Body
 
@@ -53,6 +56,7 @@ This step runs on the fully drafted, internally-held script before any output is
 
 (a) The brand profile's `forbidden_constructions` field: flag and fix any line that violates a listed rule.
 (b) Universal house rules: no em dashes (use commas, colons, or parentheses instead) and no `--` double-hyphen constructions.
+(c) Written-hook length: count the words in the written hook. If it exceeds 7 words (hard ceiling about 10), tighten it to 7 words or fewer before the script is written. Do not output a script with an overlong written hook.
 
 Fix all violations before proceeding. The final script is produced as a single output only after all violations are resolved. Do not output a script that contains any flagged construction. Example violations caught in test runs: an em dash used as a clause separator, and a "not X, it's Y" contrarian framing in a hook.
 
