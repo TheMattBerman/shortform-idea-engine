@@ -1,0 +1,21 @@
+{
+  "name": "shortform-idea-engine",
+  "owner": {
+    "name": "Matthew Berman"
+  },
+  "plugins": [
+    {
+      "name": "shortform-idea-engine",
+      "source": "./",
+      "description": "Turn competitor short-form videos into ranked, brand-fit video ideas and scripts.",
+      "skills": [
+        "./skills/shortform-idea-engine",
+        "./skills/video-decoder",
+        "./skills/script-writer",
+        "./skills/virlo",
+        "./skills/scrape",
+        "./skills/brand-profiler"
+      ]
+    }
+  ]
+}
