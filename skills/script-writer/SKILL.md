@@ -7,6 +7,33 @@ description: "Write a production-ready short-form video script from an approved 
 
 Turn one approved short-form video idea into a production-ready script.
 
+## Preserve the creative mechanism
+
+Carry the selected concept's creative contract into the script: native format,
+attention promise, product role, viewer expectation, change mechanism, earned
+ending and signature beat. Keep the setup required for that beat. Before polishing
+individual hooks, read the full opening-to-ending sequence and identify what each
+beat changes in information, expectation or emotion.
+
+For every beat record `viewer knows before`, `new information/emotion after`, and
+`intended performance`. Give a reaction, pause or repeated reveal its actual job;
+do not add a cut or a line merely to satisfy a retention-device quota. Compare the
+script with one relevant positive and one close negative when available, naming
+the mechanism rather than copying surface traits.
+
+The hook and CTA fields below describe the common spoken-video template. For an
+approved music-led, narrative or native-placement format, retain the section and
+write `not used` with its reason when speech, text, demonstration or a sales CTA
+would break the concept. Use an earned ending in the CTA section. Do not invent
+dialogue or force an offer to fill a template. A proof object may be an action,
+exchange or reveal, not necessarily a product screen or document.
+
+Return a keep list, at most three specific fixes, and the responsible stage. A
+broken premise goes back to the idea owner; an awkward line stays in scripting.
+When AI Video Kit is the downstream producer, use its configured root's
+`docs/creative-stage-review.md` and `creative-director/stage-judge.md`. Script taste
+is a forecast; actual acting, audio and motion remain uninspected until production.
+
 ## When to use
 
 Use this skill when you have a single approved idea (with its borrowed VV, IT, and Format) and a brand profile, and you need a complete script ready to shoot. It can be run standalone or called by the `shortform-idea-engine` orchestrator for each approved top-N idea.
