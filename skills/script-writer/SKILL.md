@@ -34,6 +34,52 @@ When AI Video Kit is the downstream producer, use its configured root's
 `docs/creative-stage-review.md` and `creative-director/stage-judge.md`. Script taste
 is a forecast; actual acting, audio and motion remain uninspected until production.
 
+## Carry a complete causal story
+
+A script is not a sequence of labeled moments; it is a chain of triggers,
+reactions and consequences. Before writing beats, confirm the story actually
+moves:
+
+- Every beat produces a new consequence, emotional change or escalation. A time
+  or attempt label ("day 3", "attempt one") is not itself an event; if the label
+  is the only thing that changed, the beat has not earned its place.
+- Establish why the scene is being recorded (the in-world reason a camera or
+  phone exists), a plausible environment for what is shown, and who is speaking
+  before polishing any individual line.
+- Give every character a stable ID (for example `OWNER_01`, `CUSTOMER_02`) instead
+  of a generic label like "man" or "woman". Reuse the same ID for that person in
+  every beat, the shotlist and any downstream production reference.
+- Name setup/payoff pairs: when a beat pays off an earlier setup, state which
+  earlier beat it depends on. Do not write a payoff whose setup was never
+  planted.
+- Order triggers before reactions: a character cannot react to something that
+  has not happened yet. If a beat is a reaction, name what it is reacting to.
+- Name any sound the viewer must recognize (what it is, where it comes from,
+  and what it causes a character to do), not just that "audio plays."
+- For any beat that needs a specific, provable performance, state who performs
+  it, whether it happens on camera or off, and the exact line or action
+  required. This is the signature beat; do not leave it implicit.
+- Offscreen narration and phone voices are legitimate performers. Do not force
+  an offscreen voice onto camera to "show" the speaker; visibility should match
+  what the story needs.
+- Not every format needs a CTA. A narrative or native-placement format can end
+  on the earned beat itself. Do not bolt a negative hook, a demo and a sales
+  close onto a format that does not call for one.
+- If a beat asks one character to perform more than one coordinated action
+  (for example: notice, then react, then hand off an object), split it into
+  separate beats wherever a natural edit point would preserve the meaning.
+  A single beat asking for too much coordinated action is where generation and
+  editing tend to fail.
+
+### Optional scene block
+
+When the downstream producer understands `scene-contract/v1` (for example AI
+Video Kit's `docs/scene-contract.md`), add the optional `scene` block described
+in `references/script-template.md` to carry cast IDs, events and sound cues
+through storyboard and generation without re-deriving them from prose. Omit the
+block entirely when the downstream producer does not use it; the prose causal
+story above is the minimum bar for every script.
+
 ## When to use
 
 Use this skill when you have a single approved idea (with its borrowed VV, IT, and Format) and a brand profile, and you need a complete script ready to shoot. It can be run standalone or called by the `shortform-idea-engine` orchestrator for each approved top-N idea.
